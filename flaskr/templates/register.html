@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Register{% endblock %}</h1>
+  <div class="text-center">
+  	  <img src="{{ url_for('static', filename='img/1.png') }}" alt="aaa" class="img-thumbnail">
+  </div>
+{% endblock %}
+
+
+{% block content %}
+
+<form method="post">
+  <div class="form-group">
+    <label for="username1">Username</label>
+    <input type="text" class="form-control" id="username1" placeholder="Username" name="username1">
+    <small id="emailHelp" class="form-text text-muted">You need to input all field.</small>
+  </div>
+  <div class="form-group">
+    <label for="filename">File name</label>
+    <input type="text" class="form-control" id="filename" placeholder="filename" name="filename">
+  </div>
+   <div class="form-group">
+    <label for="hash">Hash</label>
+    <input type="text" class="form-control" id="hash" placeholder="hash" name="hash">
+  </div>
+  <div class="form-group">
+    <label for="body">見解など</label>
+    <textarea class="form-control" id="body" name="body" rows="3"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}
