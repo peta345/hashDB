@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+  <h1 class="text-success">{% block title %}BackDoor{% endblock %}</h1>
+{% endblock %}
+
+
+{% block content %}
+
+<form method="post">
+  <div class="form-group">
+    <input type="password" class="form-control" id="password1"  name="password1">
+  </div>
+</form>
+{% endblock %}

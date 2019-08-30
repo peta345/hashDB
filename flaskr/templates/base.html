@@ -1,0 +1,25 @@
+<!doctype html>
+<title>{% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+<div class="container">
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="/">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/register">Register</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/admin">BackDoor</a>
+  </li>
+</ul>
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</section>
+</div>

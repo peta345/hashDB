@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}Home{% endblock %}</h1>
+    <div class="text-center">
+  	  <img src="{{ url_for('static', filename='img/2.gif') }}" alt="aaa" class="img-thumbnail">
+  </div>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+  <div class="row">
+  {% for post in posts %}
+  <div class="col-md-6">
+    <article class="post">
+      <header>
+        <div>
+          <h1>{{ post['filename'] }}</h1>
+          <h5>{{ post['hash'] }}</h5>
+          <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
+        </div>
+      </header>
+      <p class="body">{{ post['body'] | cr }}</p>
+    </article>
+  </div>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+  </div>
+</div>
+{% endblock %}
