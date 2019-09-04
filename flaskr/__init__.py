@@ -29,14 +29,6 @@ def create_app(test_config=None):
     def cr(arg):
         return Markup(arg.replace('\r', '<br>'))
 
-    # a simple page that says hello
-    @app.route('/')
-    def index():
-        db = get_db()
-        posts = db.execute('SELECT created, username, filename, body, hash FROM post').fetchall()
-        return render_template('/home.html', posts=posts)
-
-
     @app.route('/admin', methods=('GET', 'POST'))
     def admin():
         if request.method == "POST":
@@ -63,51 +55,14 @@ def create_app(test_config=None):
             return render_template('edit.html', posts=posts)
 
 
-    @app.route('/q/<hashparam>', methods=('GET', 'POST'))
-    def home(hashparam=None):
-        db = get_db()
-        print(hashparam)
-        post = db.execute(
-            'SELECT created, username, filename, body, hash FROM post WHERE hash = "{}"'
-            .format(hashparam)).fetchone()
-        return render_template('/article.html', post=post)
-
-
-    @app.route('/register', methods=('GET','POST'))
-    def register():
-        if request.method == "POST":
-            username = request.form['username1']
-            filename = request.form['filename']
-            hashval = request.form['hash']
-            body = request.form['body']
-            db = get_db()
-            error = None
-
-            print("{0}, {1}, {2}, {3}".format(username, filename, hashval, body))
-
-            if not username or not filename or not hashval or not body:
-                error = "You need to input all value."
-            elif db.execute(
-            'SELECT id FROM post WHERE hash = ?', (hashval,)
-            ).fetchone() is not None:
-                error = 'Hash {} is already registered.'.format(hashval)
-
-            if error is None:
-                db.execute(
-                    'INSERT INTO post (username, filename, body, hash) VALUES (?, ?, ?, ?)',
-                    (username,filename,body,hashval)
-                )
-                db.commit()
-                flash("Register success !")
-                return redirect(url_for('register'))
-
-            flash(error)
-        return render_template('/register.html')
-
-
-
-
     from . import db
     db.init_app(app)
+
+    from . import auth
+    app.register_blueprint(auth.bp)
+
+    from . import blog
+    app.register_blueprint(blog.bp)
+    app.add_url_rule('/', endpoint='index')
 
     return app
