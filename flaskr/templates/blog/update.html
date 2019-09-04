@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Edit "{{ post['filename'] }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<form class="was-validated" method="post">
+  <div class="mb-3">
+    <label for="validationTextarea">Detail</label>
+    <textarea rows="10" class="form-control is-invalid" id="validationTextarea body" name="body" placeholder="Required example textarea" required>{{ request.form['body'] or post['body'] }}</textarea>
+    <div class="invalid-feedback">
+      Required contet.
+    </div>
+  </div>
+  <button type="submit" class="btn btn-outline-success btn-sm">Update</button>
+</form>
+  <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
+    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+  </form>
+{% endblock %}
