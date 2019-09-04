@@ -4,14 +4,29 @@
 <div class="container">
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link" href="/">Home</a>
+    <a class="nav-link" href="{{ url_for('blog.index') }}">Home</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/register">Register</a>
+    <a class="nav-link" href="{{ url_for('blog.create') }}">Create post</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="/admin">BackDoor</a>
   </li>
+  {% if g.user %}
+  <li class="nav-item">
+    <span class="nav-link">{{ g.user['username'] }}</span>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('auth.logout') }}">Log out</a>
+  </li>
+  {% else %}
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('auth.register') }}">User Register</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('auth.login') }}">Log in</a>
+  </li>
+  {% endif %}
 </ul>
 <section class="content">
   <header>
